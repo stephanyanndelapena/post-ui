@@ -1,0 +1,33 @@
+:root{
+  --bg:#f9f9fb;
+  --card:#fff;
+  --accent:#1d4ed8;
+  --danger:#dc2626;
+}
+body{
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  margin:0;
+  background:var(--bg);
+  color:#111827;
+}
+.container{
+  max-width:900px;
+  margin:32px auto;
+  padding:20px;
+}
+.post-form, .post-item{
+  background:var(--card);
+  border-radius:8px;
+  padding:12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  margin-bottom:12px;
+}
+.post-form label{display:block;font-weight:600;margin-top:8px}
+.post-form input, .post-form textarea{width:100%;padding:8px;margin-top:6px;border:1px solid #e5e7eb;border-radius:6px}
+.post-form .actions{margin-top:10px}
+button{background:var(--accent);color:#fff;padding:8px 12px;border:0;border-radius:6px;cursor:pointer}
+button.danger{background:var(--danger)}
+.post-item .meta{display:flex;justify-content:space-between;align-items:center}
+.post-item p{white-space:pre-wrap}
+.post-item .img-wrap img{max-width:100%;border-radius:6px;margin-top:8px}
+.error{color:var(--danger)}
