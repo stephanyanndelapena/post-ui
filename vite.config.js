@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => {
       proxy: {
         // forward API requests to Spring Boot
         '/api': {
-          target: 'http://localhost:8080',
+          target: 'https://facebook-api-9q56.onrender.com',
           changeOrigin: true,
         },
       },
