@@ -18,7 +18,7 @@ export default defineConfig(({ command }) => {
     // Production build: write to backend static folder.
     // Assumes frontend folder is inside backend project root (frontend/)
     build: {
-      outDir: path.resolve(__dirname, '../src/main/resources/static'),
+      outDir: 'dist', 
       emptyOutDir: true,
     },
   }
