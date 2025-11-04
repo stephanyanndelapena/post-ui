@@ -3,7 +3,7 @@
 // VITE_API_BASE=http://localhost:8080
 // In production (Render) set VITE_API_BASE to your Render service URL (no trailing slash),
 // e.g. https://your-api.onrender.com
-const BASE_URL = import.meta.env.VITE_API_BASE || '';
+const BASE_URL = import.meta.env.VITE_API_BASE || 'https://facebook-api-9q56.onrender.com';
 const BASE = `${BASE_URL}/api/posts`.replace(/(?<!:)\/\//g, '/').replace('http:/', 'http://').replace('https:/', 'https://');
 
 async function handleResponse(res) {
