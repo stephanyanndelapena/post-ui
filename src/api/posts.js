@@ -1,49 +1,51 @@
-// src/api/posts.js
-// Uses VITE_API_URL when provided (baked at build time).
-const API_HOST = (import.meta.env.VITE_API_URL || 'https://facebook-api-9q56.onrender.com').replace(/\/$/, '')
-const base = `${API_HOST}/api/posts`
+// The base URL for the API is read from Vite environment variable VITE_API_BASE.
+// In development you can set this in a local .env file (e.g. .env.local):
+// VITE_API_BASE=http://localhost:8080
+// In production (Render) set VITE_API_BASE to your Render service URL (no trailing slash),
+// e.g. https://your-api.onrender.com
+const BASE_URL = import.meta.env.VITE_API_BASE || '';
+const BASE = `${BASE_URL}/api/posts`.replace(/(?<!:)\/\//g, '/').replace('http:/', 'http://').replace('https:/', 'https://');
 
-console.log('API Base URL:', base) // Debug logging
-
-async function handleResp(resp) {
-  if (!resp.ok) {
-    const txt = await resp.text()
-    console.error(`API Error: ${resp.status} ${resp.statusText}`, txt)
-    throw new Error(txt || resp.statusText)
+async function handleResponse(res) {
+  if (!res.ok) {
+    const txt = await res.text();
+    let message = txt;
+    try {
+      const json = JSON.parse(txt);
+      if (json.message) message = json.message;
+    } catch (e) {}
+    throw new Error(message || res.statusText);
   }
-  if (resp.status === 204) return null
-  return resp.json()
+  return res.json();
 }
 
 export async function listPosts() {
-  const resp = await fetch(base)
-  return handleResp(resp)
-}
-
-export async function getPost(id) {
-  const resp = await fetch(`${base}/${id}`)
-  return handleResp(resp)
+  const res = await fetch(BASE);
+  return handleResponse(res);
 }
 
 export async function createPost(payload) {
-  const resp = await fetch(base, {
+  const res = await fetch(BASE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
-  })
-  return handleResp(resp)
+  });
+  return handleResponse(res);
 }
 
 export async function updatePost(id, payload) {
-  const resp = await fetch(`${base}/${id}`, {
+  const res = await fetch(`${BASE}/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
-  })
-  return handleResp(resp)
+  });
+  return handleResponse(res);
 }
 
 export async function deletePost(id) {
-  const resp = await fetch(`${base}/${id}`, { method: 'DELETE' })
-  return handleResp(resp)
+  const res = await fetch(`${BASE}/${id}`, {
+    method: 'DELETE',
+  });
+  if (!res.ok) throw new Error('Delete failed');
+  return true;
 }
