@@ -1,4 +1,7 @@
-const base = '/api/posts'
+// src/api/posts.js
+// Uses VITE_API_URL when provided (baked at build time).
+const API_HOST = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+const base = API_HOST ? `${API_HOST}/api/posts` : '/api/posts'
 
 async function handleResp(resp) {
   if (!resp.ok) {
